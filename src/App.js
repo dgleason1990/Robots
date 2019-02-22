@@ -10,7 +10,6 @@ class App extends Component {
   }
 
   async componentWillMount(){
-console.log('before')
     await fetch('https://www.hatchways.io/api/assessment/students')
     .then(res=>res.json())
     .then(data => {this.setState({
@@ -20,10 +19,8 @@ console.log('before')
         }]
       });
     })
-
-    let newStudent = [this.state.students.map( student => {return {...this.state.students[student].tag = []} } )]
     await this.setState({ 
-      students: ''
+      students: [...this.state.students.map( (student) => { return {tag:[],...student} })]
     })
 }
 
@@ -46,34 +43,26 @@ console.log('before')
   }
 
   render() {
-    console.log(this.state)
-    // let filterTag = (data) => {
-    //   let isTrue;
-    //   if(data.tag === undefined){
-    //     isTrue = false
-    //   }
-    //   return isTrue;
-    // }
-
-    // let tag;
-    // let checkTag = ()=>{
-    //   if(tag === undefined){
-    //     tag = 'empty'
-    //   } else {
-    //     tag = 'changed'
-    //   }
-    // }
-
+    let tag = [];
     let filterInput = (data)=>{
-      // console.log(students)
       let firstName = data.firstName.toUpperCase().split('');
       let input = this.state.input.toUpperCase().split('');
       let lastName = data.lastName.toUpperCase().split('');
-      // console.log(this.state)
-      // data.tag[0].toUpperCase().split('')
-      // let tag = data.tag[0]
-      // checkTag();
-      // console.log(data.tag)
+
+      if (data.tag === undefined || data.tag.length === 0){
+        console.log('nothing')
+      } 
+      else {
+          for(let i=0; i<data.tag.length;i++){
+            tag.push(data.tag[i])
+          }
+      }
+
+      console.log(tag)
+      let newArr=[]
+      tag.forEach( i => {newArr.push(i.split(''))})
+
+      console.log(newArr)
       if(this.state.input === ''){
         return true
       } 
@@ -90,6 +79,7 @@ console.log('before')
         }
         return isTrue
       }
+
     }
 
     let displayInformation = (data) => {
@@ -111,7 +101,6 @@ console.log('before')
           }]
       })
     }
-
       return <div>
               <div className='studentCard'> 
                 <img src={data.pic}/>
