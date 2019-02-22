@@ -9,20 +9,25 @@ class App extends Component {
     tag:''
   }
 
-  async componentDidMount(){
+  async componentWillMount(){
+console.log('before')
     await fetch('https://www.hatchways.io/api/assessment/students')
     .then(res=>res.json())
-    .then( data => { this.setState({
+    .then(data => {this.setState({
         students: data.students,
         toggle:[{
-          className: data.students.map(()=>{return 'isClosed'})
+          className: data.students.map(()=>{ return 'isClosed' })
         }]
       });
     })
-  }
+
+    let newStudent = [this.state.students.map( student => {return {...this.state.students[student].tag = []} } )]
+    await this.setState({ 
+      students: ''
+    })
+}
 
   handleTag = (id) => {
-    console.log(this.state)
     if(this.state.students[id-1].tag === undefined){
       this.state.students[id-1].tag = [];
       this.state.students[id-1].tag.push(this.state.tag);
@@ -41,18 +46,34 @@ class App extends Component {
   }
 
   render() {
-    let filterTag = (data) => {
-      let isTrue;
-      console.log(data.tag)
-      if(data.tag === undefined){
-        isTrue = false
-      }
-      return isTrue;
-    }
-    let filterName = (data)=>{
+    console.log(this.state)
+    // let filterTag = (data) => {
+    //   let isTrue;
+    //   if(data.tag === undefined){
+    //     isTrue = false
+    //   }
+    //   return isTrue;
+    // }
+
+    // let tag;
+    // let checkTag = ()=>{
+    //   if(tag === undefined){
+    //     tag = 'empty'
+    //   } else {
+    //     tag = 'changed'
+    //   }
+    // }
+
+    let filterInput = (data)=>{
+      // console.log(students)
       let firstName = data.firstName.toUpperCase().split('');
       let input = this.state.input.toUpperCase().split('');
       let lastName = data.lastName.toUpperCase().split('');
+      // console.log(this.state)
+      // data.tag[0].toUpperCase().split('')
+      // let tag = data.tag[0]
+      // checkTag();
+      // console.log(data.tag)
       if(this.state.input === ''){
         return true
       } 
@@ -63,7 +84,7 @@ class App extends Component {
             isTrue = false
             break;
           } 
-          else if(input[i] ===firstName[i] || input[i] === lastName[i]){
+          else if(input[i] === firstName[i] || input[i] === lastName[i]){
             isTrue = true
           }
         }
@@ -105,8 +126,8 @@ class App extends Component {
                     {data.grades.map(grade => {
                       let index = data.grades.indexOf(grade)+1
                         return <p className={this.state.toggle[0].className[data.id-1]}> Test {index}: {grade}% </p>})}
-                    <input onChange={(e)=>{this.setState({tag: e.target.value})}}/>
                     <div id={`tag${data.id-1}`}></div>
+                    <input onChange={(e)=>{this.setState({tag: e.target.value})}}/>
                     <button onClick={()=>{this.handleTag(data.id)}}> Submit Tag </button>
                   </div>
                 </div>
@@ -119,7 +140,7 @@ class App extends Component {
         <input className='search' onChange={(e)=>{this.setState({ input: e.target.value })}} placeholder='Search by Name'/>
         <input className='search' onChange={(e)=>{this.setState({ input: e.target.value })}} placeholder='Search by Tag'/>
         <div className="App">
-          {this.state.students.filter(filterName || filterTag).map(data=>displayInformation(data))}
+          {this.state.students.filter(filterInput).map(data=>displayInformation(data))}
         </div>
       </div>
     );
