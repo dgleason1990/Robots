@@ -1,0 +1,54 @@
+.search {
+  width: 100vw;
+}
+
+.App {
+  overflow: scroll;
+  height: 40vw;
+  position: absolute;
+  width: 80vw;
+  margin: 5vw 10vw 5vw 10vw;
+  border: thin lightgrey solid;
+  border-radius: 5px;
+}
+
+.studentCard {
+  margin: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.studentCard img {
+  width: 200px;
+  height: 200px;
+  border: lightgrey solid thin;
+  border-radius: 100%;
+}
+
+.studentCard .studentDetails .button {
+  position: absolute;
+  right: 1vw;
+  cursor: pointer;
+}
+
+.studentCard .studentDetails .studentName {
+  position: relative;
+  right: 20px;
+}
+
+.studentCard .isClosed {
+  display: none;
+}
+
+.studentCard .isOpen {
+  display: block;
+}
+
+hr {
+  width: 80%;
+}
+/*# sourceMappingURL=App.css.map */

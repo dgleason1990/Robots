@@ -1,0 +1,45 @@
+.search{
+    width: 100vw;
+}
+.App{
+    overflow: scroll;
+    height: 40vw;
+    position: absolute;
+    width: 80vw;
+    margin: 5vw 10vw 5vw 10vw;
+    border: thin lightgrey solid;
+    border-radius: 5px;
+}
+
+.studentCard{
+    margin: 50px;
+    display:flex;
+    justify-content:flex-start;
+    img{
+        width: 200px;
+        height: 200px;
+        border: lightgrey solid thin;
+        border-radius: 100%;
+    }
+    .studentDetails{
+        .button{
+            position: absolute;
+            right: 1vw;
+            cursor:pointer
+        }
+        .studentName{
+            position: relative;
+            right: 20px
+        }
+
+        }
+        .isClosed{
+            display: none;
+        }
+        .isOpen{
+            display: block;
+        }
+}
+hr{
+    width: 80%
+}
