@@ -22,6 +22,7 @@
         border-radius: 100%;
     }
     .studentDetails{
+        margin: auto;
         .button{
             position: absolute;
             right: 1vw;
@@ -30,14 +31,26 @@
         .studentName{
             position: relative;
             right: 20px
-        }
-
+            }
         }
         .isClosed{
             display: none;
         }
         .isOpen{
             display: block;
+        }
+        .grades{
+            div{
+                display: flex;
+                justify-content: flex-start;
+                padding: 30px 0 30px 0;
+                div{
+                    padding: 5px;
+                    border-radius: 5px;
+                    background-color: lightgrey;
+                    margin-right: 10px
+                }
+            }
         }
 }
 hr{
