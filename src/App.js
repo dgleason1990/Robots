@@ -30,10 +30,10 @@ class App extends Component {
       this.state.students[id-1].tag.push(this.state.tag.split(''));
       let displayTag = document.getElementById(`tag${id-1}`)
       let tagArr = this.state.students[id-1].tag.map(x => x.join(''))
-        let newDiv = document.createElement('div');
-        let textNode = document.createTextNode(tagArr[tagArr.length-1]);
-        newDiv.appendChild(textNode)
-        displayTag.appendChild(newDiv)
+      let newDiv = document.createElement('div');
+      let textNode = document.createTextNode(tagArr[tagArr.length-1]);
+      newDiv.appendChild(textNode)
+      displayTag.appendChild(newDiv)
     } 
     else {
       this.state.students[id-1].tag.push(this.state.tag.split(''));
@@ -43,6 +43,21 @@ class App extends Component {
       let textNode = document.createTextNode(tagArr[tagArr.length-1]);
       newDiv.appendChild(textNode)
       displayTag.appendChild(newDiv)
+    }
+  }
+
+  handleInputDisplay = (data)=>{
+    if(document.querySelector(`#tag${data.id-1}`) === null){
+    }
+    else if(document.querySelector(`#tag${data.id-1} div`) === null){
+      let displayTag = document.getElementById(`tag${data.id-1}`)
+      let tagArr = this.state.students[data.id-1].tag.map(x => x.join(''))
+      tagArr.forEach( x => {
+        let newDiv = document.createElement('div');
+        let textNode = document.createTextNode(x);
+        newDiv.appendChild(textNode)
+        displayTag.appendChild(newDiv)
+      })
     }
   }
 
@@ -57,41 +72,39 @@ class App extends Component {
       let firstName = data.firstName.toUpperCase().split('');
       let input = this.state.input.toUpperCase().split('');
       let lastName = data.lastName.toUpperCase().split('');
-
       if (data.tag === undefined || data.tag.length === 0){} 
       else {
           for(let i=0; i<data.tag.length;i++){
             tag.push(data.tag[i])
           }
       }
-
       if(this.state.input === ''){
         return true
       }
       else {
         let isTrue;
+        let isTrueArr =[];
         if(data.tag.length > 0){
           for(let x=0; x<data.tag.length ; x++){
-            tagArr.push(data.tag[x].map((z)=>{ return z.toUpperCase()}))
+            tagArr.push(data.tag[x].map( (z)=>{ return z.toUpperCase()} ))
             for(let i=0 ; i<input.length ; i++){
-              console.log('tagArr = ' + tagArr[x][i])
-              console.log(input.length)
-              console.log(i)
-              console.log('input = ' + input[i])
-              console.log(input[i] !== tagArr[x][i])
               if(input[i] !== firstName[i] && input[i] !== lastName[i] && input[i] !== tagArr[x][i]){
-                isTrue = false
-                console.log('no match')
+                isTrueArr.push(false)
                 break;
               } 
               else if(input[i] === firstName[i] || input[i] === lastName[i] || input[i] === tagArr[x][i]){
-                isTrue = true
-                console.log('found match at ' + data.tag)
+                isTrueArr.push(true)
               }
-              return isTrue;
             } 
-            
+            if(isTrueArr[isTrueArr.length-1] === true){
+              isTrue = true
+              break;
+            } else {
+              isTrue =false
+            }
           }
+          this.handleInputDisplay(data);
+          return isTrue;
       }
       else{
         for(let i=0 ; i<input.length ; i++){
@@ -102,26 +115,12 @@ class App extends Component {
           else if( input[i] === firstName[i] || input[i] === lastName[i] ){
             isTrue = true
           }
-      } 
+      }
       return isTrue
       }
     }
   }
 
-  // let isTrue;
-  //       for(let x=0; x<data.tag.length ; x++){
-  //         console.log(data.tag[x])
-  //         for(let i=0 ; i<input.length ; i++){
-  //           console.log(data.tag[x][i])
-  //           if(input[i] !== firstName[i] && input[i] !== lastName[i] && input[i] !== data.tag[x][i]){
-  //             isTrue = false
-  //           } 
-  //           else if(input[i] === firstName[i] || input[i] === lastName[i] || input[i] === data.tag[x][i]){
-  //             isTrue = true
-  //           }
-  //       } 
-  //       return isTrue
-  //     }
     let displayInformation = (data) => {
       let add = (total, num)=>{
         return (total + num)
